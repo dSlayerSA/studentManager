@@ -22,11 +22,31 @@ class StudentController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request) {
+        $validatedData = $request->validate([
+        'name' => 'required|max:255',
+        'cpf' => 'required|unique:students|max:14',
+        'AR' => 'required|unique:students|max:4',
+        'email' => 'required|email|unique:students|max:255'
+        ]);
+        
+        // forma o CPF before send to database
+        $cpf = $this->formatCPF($validatedData['cpf']);
+        
+        $student = new Student;
+        $student->name = $validatedData['name'];
+        $student->cpf = $cpf;
+        $student->AR = $validatedData['AR'];
+        $student->email = $validatedData['email'];
+        $student->save();
+        
+        return response()->json([
+        'message' => 'student create success!',
+        'student' => $student
+        ], 201);
+        }
 
+        
     /**
      * Display the specified resource.
      *
