@@ -191,5 +191,18 @@ export default {
     this.getStudents();
 
   },
+  
+  methods: {
+    getStudents() {
+      axios.get('http://localhost:8000/api/students')
+        .then(response => {
+          this.Students = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+
+  }
 }
 </script>
