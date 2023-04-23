@@ -12,13 +12,16 @@ class StudentController extends Controller
 
         return response()->json($students);
     }
-    
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+
+    private function formatCPF($cpf)
+    {
+        // format cpf to database pattern XXX.XXX.XXX-XX
+        $cpf = substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2);
+        return $cpf;
+    }
+
+
     public function store(Request $request)
     {
         //
