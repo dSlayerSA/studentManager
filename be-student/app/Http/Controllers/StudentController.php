@@ -96,14 +96,17 @@ class StudentController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+   
+    public function destroy($AR)
+{
+    $student = Student::find($AR);
+    if (!$student) {
+        return response()->json(['error' => 'Student not found'], 404);
     }
+
+    $student->delete();
+
+    return response()->json(['message' => 'Student delete success!']);
+}
+
 }

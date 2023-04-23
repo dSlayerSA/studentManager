@@ -24,6 +24,6 @@ Route::get('students/show', 'App\Http\Controllers\StudentController@show');
 
 Route::post('/students/store', 'App\Http\Controllers\StudentController@store');
 
-Route::put('/students/{RA}', 'App\Http\Controllers\StudentController@update');
+Route::put('/students/{AR}', 'App\Http\Controllers\StudentController@update');
 
-Route::delete('/students/{RA}', 'App\Http\Controllers\StudentController@destroy');
+Route::delete('/students/{AR}', 'App\Http\Controllers\StudentController@destroy');
