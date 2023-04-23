@@ -341,6 +341,30 @@ export default {
       this.studentEditing = null;
       this.studentBeforeEdit = null;
     },
+
+    deleteStudent(AR) {
+      const confirmar = confirm(`Tem certeza que deseja excluir o aluno de AR ${AR}?`);
+      if (confirmar) {
+        axios.delete(`http://localhost:8000/api/students/${AR}`)
+          .then(response => {
+            console.log(response.data);
+            const index = this.Students.findIndex(aluno => aluno.AR === AR);
+            if (index !== -1) {
+              this.Students.splice(index, 1);
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            if (error.response.status === 404) {
+              alert(`O aluno de AR ${AR} não foi encontrado na base de dados.`);
+            } else {
+              alert(`Ocorreu um erro ao excluir o aluno de AR ${AR}.`);
+            }
+          });
+      }
+    },
+
+    
   }
 }
 </script>
