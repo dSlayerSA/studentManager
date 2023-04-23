@@ -23,35 +23,36 @@ class StudentController extends Controller
     }
 
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
-        'name' => 'required|max:255',
-        'cpf' => 'required|unique:students|max:14',
-        'AR' => 'required|unique:students|max:4',
-        'email' => 'required|email|unique:students|max:255'
+            'name' => 'required|max:255',
+            'cpf' => 'required|unique:students|max:14',
+            'AR' => 'required|unique:students|max:4',
+            'email' => 'required|email|unique:students|max:255'
         ]);
-        
+
         // forma o CPF before send to database
         $cpf = $this->formatCPF($validatedData['cpf']);
-        
+
         $student = new Student;
         $student->name = $validatedData['name'];
         $student->cpf = $cpf;
         $student->AR = $validatedData['AR'];
         $student->email = $validatedData['email'];
         $student->save();
-        
-        return response()->json([
-        'message' => 'student create success!',
-        'student' => $student
-        ], 201);
-        }
 
-        
+        return response()->json([
+            'message' => 'student create success!',
+            'student' => $student
+        ], 201);
+    }
+
+
     public function show(Request $request)
     {
         $query = Student::query();
-    
+
         if ($request->has('cpf')) {
             $cpf = $request->input('cpf');
             if (strlen($cpf) == 11) {
@@ -59,34 +60,41 @@ class StudentController extends Controller
             }
             $query->where('cpf', $cpf);
         }
-    
+
         if ($request->has('AR')) {
             $query->where('AR', $request->input('AR'));
         }
-    
+
         if ($request->has('name')) {
-            $query->where('name', 'like', '%'.$request->input('name').'%');
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
         }
-    
+
         $students = $query->get();
-    
+
         return response()->json([
             'data' => $students
         ]);
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, $AR)
     {
-        //
+        $student = Student::where('AR', $AR)->firstOrFail();
+        if ($request->has('name')) {
+            $student->name = $request->input('name');
+        }
+        if ($request->has('cpf')) {
+            $student->cpf = $request->input('cpf');
+        }
+        if ($request->has('email')) {
+            $student->email = $request->input('email');
+        }
+
+        $student->save();
+
+        return response()->json(['message' => 'Student update success!', 'data' => $student], 200);
     }
+
 
     /**
      * Remove the specified resource from storage.
