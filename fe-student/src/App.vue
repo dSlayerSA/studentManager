@@ -118,14 +118,14 @@
 </template>
 
 <style lang="scss">  tbody {
-  tr:hover {
-    background-color: transparent !important;
+    tr:hover {
+      background-color: transparent !important;
+    }
   }
-}
 
-.container {
-  margin-left: 10px;
-}
+  .container {
+    margin-left: 10px;
+  }
 </style>
 
 <script>
@@ -186,5 +186,10 @@ export default {
     }
   },
 
+  created() {
+    this.selectedPage = 'Students';
+    this.getStudents();
+
+  },
 }
 </script>
