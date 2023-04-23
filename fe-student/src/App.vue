@@ -127,3 +127,44 @@
   margin-left: 10px;
 }
 </style>
+
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      drawer: true,
+      selectedPage: 'Students',
+      searchText: '',
+      Students: [],
+      headers: [
+        { text: 'Registro Academico', value: 'AR' },
+        { text: 'name', value: 'name' },
+        { text: 'CPF', value: 'cpf' },
+        { text: 'EMAIL', value: 'email' },
+      ],
+      AR: '',
+      name: '',
+      cpf: '',
+      email: '',
+
+      addStudentDialog: false,
+      editStudentDialog: false,
+
+      selectedStudent: {},
+      studentEditing: {},
+      aluno: {},
+
+      showAlert: false,
+      alertMessage: "",
+      requiredRule: (value) => !!value || "Campo obrigatório.",
+      emailRule: (value) => {
+        const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+        return emailRegex.test(value) || "E-mail inválido.";
+      }
+    };
+  }
+}
+</script>
