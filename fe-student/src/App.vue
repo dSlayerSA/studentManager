@@ -116,3 +116,14 @@
     </v-main>
   </v-app>
 </template>
+
+<style lang="scss">  tbody {
+  tr:hover {
+    background-color: transparent !important;
+  }
+}
+
+.container {
+  margin-left: 10px;
+}
+</style>
