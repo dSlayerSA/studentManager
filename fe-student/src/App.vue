@@ -364,7 +364,12 @@ export default {
       }
     },
 
-    
+    //check if search input has any text, if empty reload student list
+    clearedSearchInput() {
+      if (this.searchText === '') {
+        this.getStudents();
+      }
+    },
   }
 }
 </script>
