@@ -155,7 +155,7 @@ export default {
 
       selectedStudent: {},
       studentEditing: {},
-      aluno: {},
+      student: {},
 
       showAlert: false,
       alertMessage: "",
@@ -250,9 +250,9 @@ export default {
           console.log(response.data);
           this.addStudentDialog = false;
           this.$refs.form.reset();
-          this.$emit('aluno-adicionado', response.data.data);
+          this.$emit('added-student', response.data.data);
           this.getStudents();
-          alert("Aluno adicionado com sucesso!");
+          alert("Student add success!");
 
 
         })
@@ -277,14 +277,14 @@ export default {
     },
 
 
-    selectEditStudent(aluno) {
+    selectEditStudent(student) {
       this.studentBeforeEdit = {
-        AR: aluno.AR,
-        name: aluno.name,
-        cpf: aluno.cpf,
-        email: aluno.email
+        AR: student.AR,
+        name: student.name,
+        cpf: student.cpf,
+        email: student.email
       };
-      this.selectedStudent = aluno;
+      this.selectedStudent = student;
       this.editStudentDialog = true;
     },
 
@@ -348,7 +348,7 @@ export default {
         axios.delete(`http://localhost:8000/api/students/${AR}`)
           .then(response => {
             console.log(response.data);
-            const index = this.Students.findIndex(aluno => aluno.AR === AR);
+            const index = this.Students.findIndex(student => student.AR === AR);
             if (index !== -1) {
               this.Students.splice(index, 1);
             }
