@@ -191,7 +191,7 @@ export default {
     this.getStudents();
 
   },
-  
+
   methods: {
     getStudents() {
       axios.get('http://localhost:8000/api/students')
@@ -199,6 +199,38 @@ export default {
           this.Students = response.data;
         })
         .catch(error => {
+          console.log(error);
+        });
+    },
+    show() {
+      let params = {};
+
+      if (this.searchText) {
+        if (/^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(this.searchText)) {
+          // CPF no formato XXX.XXX.XXX-XX
+          params.cpf = this.searchText;
+        } else if (/^\d{11}$/.test(this.searchText)) {
+          // CPF sem formatação XXXXXXXXXXX
+          params.cpf = this.searchText.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+        } else if (/^\d{3,4}$/.test(this.searchText)) {
+          // AR
+          params.AR = this.searchText;
+        } else {
+          // name
+          params.name = this.searchText;
+        }
+      } else {
+        // Se não houver texto, recarrega a lista de alunos
+        this.getStudents();
+        return;
+      }
+
+      axios
+        .get("http://localhost:8000/api/students/show", { params: params })
+        .then((response) => {
+          this.Students = response.data.data;
+        })
+        .catch((error) => {
           console.log(error);
         });
     },
