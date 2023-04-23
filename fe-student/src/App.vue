@@ -252,13 +252,18 @@ export default {
           this.$refs.form.reset();
           this.$emit('added-student', response.data.data);
           this.getStudents();
-          alert("Student add success!");
+          alert("Aluno adicionado com sucesso!");
 
 
         })
         .catch(error => {
-          console.error(error);
-        });
+            console.error(error);
+            if (error.response.status === 422) {
+              alert(`O aluno já existe.`);
+            } else {
+              alert(`Ocorreu um erro ao criar aluno.`);
+            }
+          });
 
     },
     //open add dialog
