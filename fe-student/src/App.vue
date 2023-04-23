@@ -202,15 +202,16 @@ export default {
           console.log(error);
         });
     },
+
     show() {
       let params = {};
 
       if (this.searchText) {
         if (/^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(this.searchText)) {
-          // CPF no formato XXX.XXX.XXX-XX
+          // CPF XXX.XXX.XXX-XX
           params.cpf = this.searchText;
         } else if (/^\d{11}$/.test(this.searchText)) {
-          // CPF sem formatação XXXXXXXXXXX
+          // CPF XXXXXXXXXXX
           params.cpf = this.searchText.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
         } else if (/^\d{3,4}$/.test(this.searchText)) {
           // AR
@@ -220,7 +221,7 @@ export default {
           params.name = this.searchText;
         }
       } else {
-        // Se não houver texto, recarrega a lista de alunos
+        // search button when empty searchtext 
         this.getStudents();
         return;
       }
@@ -234,6 +235,49 @@ export default {
           console.log(error);
         });
     },
+
+
+    //adding student
+    addStudent() {
+      const formData = {
+        AR: this.AR,
+        name: this.name,
+        cpf: this.cpf,
+        email: this.email
+      };
+      axios.post('http://localhost:8000/api/students/store', formData)
+        .then(response => {
+          console.log(response.data);
+          this.addStudentDialog = false;
+          this.$refs.form.reset();
+          this.$emit('aluno-adicionado', response.data.data);
+          this.getStudents();
+          alert("Aluno adicionado com sucesso!");
+
+
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+    },
+    //open add dialog
+    AddStudentDialog() {
+      this.addStudentDialog = true;
+    },
+    
+    cancelAddStudent() {
+      this.AR = "";
+      this.name = "";
+      this.cpf = "";
+      this.email = "";
+      this.showAlert = false;
+      this.alertMessage = "";
+      this.addStudentDialog = false;
+    },
+
+    
+
 
   }
 }
