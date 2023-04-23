@@ -193,6 +193,7 @@ export default {
   },
 
   methods: {
+    //student list
     getStudents() {
       axios.get('http://localhost:8000/api/students')
         .then(response => {
@@ -203,6 +204,7 @@ export default {
         });
     },
 
+    //single search
     show() {
       let params = {};
 
@@ -225,9 +227,7 @@ export default {
         this.getStudents();
         return;
       }
-
-      axios
-        .get("http://localhost:8000/api/students/show", { params: params })
+      axios.get("http://localhost:8000/api/students/show", { params: params })
         .then((response) => {
           this.Students = response.data.data;
         })
@@ -265,7 +265,7 @@ export default {
     AddStudentDialog() {
       this.addStudentDialog = true;
     },
-    
+    //cancel student add and clear form
     cancelAddStudent() {
       this.AR = "";
       this.name = "";
@@ -276,9 +276,71 @@ export default {
       this.addStudentDialog = false;
     },
 
-    
 
+    selectEditStudent(aluno) {
+      this.studentBeforeEdit = {
+        AR: aluno.AR,
+        name: aluno.name,
+        cpf: aluno.cpf,
+        email: aluno.email
+      };
+      this.selectedStudent = aluno;
+      this.editStudentDialog = true;
+    },
 
+    saveStudentEdit() {
+      const formData = new FormData();
+      const mainStudent = { ...this.selectedStudent };
+      const editedStudent = {};
+      const editData = {};
+
+      // copy student info into studentEditing
+      this.studentEditing = { ...this.selectedStudent };
+
+      // save and compare the old and new information about the student, if there is any difference,
+      // save the newest information into a variable editedStudent
+      for (const propriedade in this.studentEditing) {
+        if (this.studentEditing[propriedade] !== this.studentBeforeEdit[propriedade]) {
+          formData.append(propriedade, this.studentEditing[propriedade]);
+          editedStudent[propriedade] = this.studentEditing[propriedade];
+          editData[propriedade] = `${propriedade}: ${this.studentEditing[propriedade]}`;
+        }
+      }
+
+      // check editedStudent looking for the changes
+      const editTrue = Object.keys(editedStudent).length > 0;
+
+      // if there are changes, make put requisition
+      if (editTrue) {
+        axios.put(`http://localhost:8000/api/students/${mainStudent.AR}`, editedStudent)
+          .then(response => {
+            console.log(response.data);
+            console.log(`Before Edit: ${JSON.stringify(mainStudent)}`);
+            console.log(`After Edit: ${JSON.stringify(this.studentEditing)}`);
+            console.log(`Changes: ${JSON.stringify(editData)}`);
+            this.editStudentDialog = false;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      } else {
+        console.log('No changes made.');
+        this.editStudentDialog = false;
+      }
+    },
+
+    //make it reload student information and close form 
+    cancelStudentEdit() {
+      if (this.selectedStudent) {
+        this.selectedStudent.AR = this.studentBeforeEdit.AR;
+        this.selectedStudent.name = this.studentBeforeEdit.name;
+        this.selectedStudent.cpf = this.studentBeforeEdit.cpf;
+        this.selectedStudent.email = this.studentBeforeEdit.email;
+      }
+      this.editStudentDialog = false;
+      this.studentEditing = null;
+      this.studentBeforeEdit = null;
+    },
   }
 }
 </script>
