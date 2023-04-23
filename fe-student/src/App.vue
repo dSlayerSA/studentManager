@@ -165,6 +165,26 @@ export default {
         return emailRegex.test(value) || "E-mail inválido.";
       }
     };
-  }
+  },
+  computed: {
+    formIsValid() {
+      return (
+        !!this.AR &&
+        !!this.name &&
+        !!this.cpf &&
+        !!this.email &&
+        this.emailRule(this.email) === true
+      );
+    },
+
+    formEditIsValid() {
+      return (
+        !!this.selectedStudent.name &&
+        !!this.selectedStudent.email &&
+        this.emailRule(this.selectedStudent.email) === true
+      );
+    }
+  },
+
 }
 </script>
