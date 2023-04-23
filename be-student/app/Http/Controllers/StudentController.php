@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Student;
 
 class StudentController extends Controller
 {
@@ -47,16 +48,33 @@ class StudentController extends Controller
         }
 
         
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $query = Student::query();
+    
+        if ($request->has('cpf')) {
+            $cpf = $request->input('cpf');
+            if (strlen($cpf) == 11) {
+                $cpf = $this->formatCPF($cpf);
+            }
+            $query->where('cpf', $cpf);
+        }
+    
+        if ($request->has('AR')) {
+            $query->where('AR', $request->input('AR'));
+        }
+    
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%'.$request->input('name').'%');
+        }
+    
+        $students = $query->get();
+    
+        return response()->json([
+            'data' => $students
+        ]);
     }
+
 
     /**
      * Update the specified resource in storage.
