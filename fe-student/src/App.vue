@@ -30,8 +30,8 @@
           <v-data-table dense v-if="Students.length > 0" :headers="headers" :items="Students">
             <template v-slot:item="{ item }">
               <tr>
-                <td><v-text-field v-model="item.RA" solo dense flat readonly></v-text-field></td>
-                <td><v-text-field v-model="item.nome" solo dense flat readonly></v-text-field></td>
+                <td><v-text-field v-model="item.AR" solo dense flat readonly></v-text-field></td>
+                <td><v-text-field v-model="item.name" solo dense flat readonly></v-text-field></td>
                 <td><v-text-field v-model="item.cpf" solo dense flat readonly></v-text-field></td>
                 <td><v-text-field v-model="item.email" solo dense flat readonly></v-text-field></td>
 
@@ -50,7 +50,7 @@
                         <v-list-item-title>Editar</v-list-item-title>
                       </v-list-item>
 
-                      <v-list-item @click="deleteStudent(item.RA)">
+                      <v-list-item @click="deleteStudent(item.AR)">
                         <v-list-item-icon>
                           <v-icon>mdi-delete</v-icon>
                         </v-list-item-icon>
@@ -76,8 +76,8 @@
               </v-card-title>
               <v-card-text>
                 <v-form ref="form">
-                  <v-text-field v-model="RA" label="RA * " outlined :rules="[requiredRule]" required></v-text-field>
-                  <v-text-field v-model="nome" label="Nome * " outlined :rules="[requiredRule]" required></v-text-field>
+                  <v-text-field v-model="AR" label="RA * " outlined :rules="[requiredRule]" required></v-text-field>
+                  <v-text-field v-model="name" label="Nome * " outlined :rules="[requiredRule]" required></v-text-field>
                   <v-text-field v-model="cpf" label="CPF * " outlined :rules="[requiredRule]" required></v-text-field>
                   <v-text-field v-model="email" label="Email * " outlined :rules="[requiredRule, emailRule]"
                     required></v-text-field>
@@ -97,11 +97,11 @@
               </v-card-title>
               <v-card-text>
                 <v-form ref="editStudentForm">
-                  <v-text-field v-model="selectedStudent.nome" :rules="[requiredRule]" label="Nome"
+                  <v-text-field v-model="selectedStudent.name" :rules="[requiredRule]" label="Nome"
                     outlined></v-text-field>
                   <v-text-field v-model="selectedStudent.email" :rules="[requiredRule, emailRule]" label="E-mail"
                     outlined></v-text-field>
-                  <v-text-field v-model="selectedStudent.RA" readonly label="RA" outlined></v-text-field>
+                  <v-text-field v-model="selectedStudent.AR" readonly label="RA" outlined></v-text-field>
                   <v-text-field v-model="selectedStudent.cpf" readonly label="CPF" outlined></v-text-field>
                 </v-form>
               </v-card-text>
