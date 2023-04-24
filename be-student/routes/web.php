@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('students', 'App\Http\Controllers\StudentController@index');
+
+Route::get('students/show', 'App\Http\Controllers\StudentController@show');
+
+Route::post('/students/store', 'App\Http\Controllers\StudentController@store');
+
+Route::put('/students/{AR}', 'App\Http\Controllers\StudentController@update');
+
+Route::delete('/students/{AR}', 'App\Http\Controllers\StudentController@destroy');
+
 Route::get('/', function () {
     return view('welcome');
 });

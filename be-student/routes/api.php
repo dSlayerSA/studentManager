@@ -27,3 +27,4 @@ Route::post('/students/store', 'App\Http\Controllers\StudentController@store');
 Route::put('/students/{AR}', 'App\Http\Controllers\StudentController@update');
 
 Route::delete('/students/{AR}', 'App\Http\Controllers\StudentController@destroy');
+
