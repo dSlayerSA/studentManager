@@ -49,6 +49,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Instalar dependências do Composer
 RUN composer install --no-interaction
 
+#ajuste apache2
+RUN sed -ri -e "s@/var/www/html@/var/www/html/public@g" /etc/apache2/sites-available/000-default.conf
+
 # Expor porta do Apache
 EXPOSE 80
 
