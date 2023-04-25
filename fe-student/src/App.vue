@@ -195,7 +195,7 @@ export default {
   methods: {
     //student list
     getStudents() {
-      axios.get('http://localhost:8000/api/students')
+      axios.get('http://3.17.36.9:8000/api/students')
         .then(response => {
           this.Students = response.data;
         })
@@ -227,7 +227,7 @@ export default {
         this.getStudents();
         return;
       }
-      axios.get("http://localhost:8000/api/students/show", { params: params })
+      axios.get("http://3.17.36.9:8000/api/students/show", { params: params })
         .then((response) => {
           this.Students = response.data.data;
         })
@@ -245,7 +245,7 @@ export default {
         cpf: this.cpf,
         email: this.email
       };
-      axios.post('http://localhost:8000/api/students/store', formData)
+      axios.post('http://3.17.36.9:8000/api/students/store', formData)
         .then(response => {
           console.log(response.data);
           this.addStudentDialog = false;
@@ -317,7 +317,7 @@ export default {
 
       // if there are changes, make put requisition
       if (editTrue) {
-        axios.put(`http://localhost:8000/api/students/${mainStudent.AR}`, editedStudent)
+        axios.put(`http://3.17.36.9:8000/api/students/${mainStudent.AR}`, editedStudent)
           .then(response => {
             console.log(response.data);
             console.log(`Before Edit: ${JSON.stringify(mainStudent)}`);
@@ -350,7 +350,7 @@ export default {
     deleteStudent(AR) {
       const confirmar = confirm(`Tem certeza que deseja excluir o aluno de AR ${AR}?`);
       if (confirmar) {
-        axios.delete(`http://localhost:8000/api/students/${AR}`)
+        axios.delete(`http://3.17.36.9:8000/api/students/${AR}`)
           .then(response => {
             console.log(response.data);
             const index = this.Students.findIndex(student => student.AR === AR);
