@@ -35,5 +35,18 @@ Melhorias:
 
 
 Requisitos não obrigatórios não terminado:
--Infelizmente não consegui fazer o deploy do backend. Fiz o deploy do frontend com facilidade no netlify, quando fui fazer o deploy do backend descobri que o Heroku agora está pago e acabou deixando de ser uma opção viável. A ideia era subir um servidor ec2 no AWS e subir as imagens do Banco de Dados e do php pelo docker.
-A imagem do mysql deu certo, no php eu cheguei a conseguir fazer um migration para criar o database do aluno. Por algum motivo a URL da API só estava retornando "Not Found 404". Fiz diversos testes, e me mantive no plano do servidor tentando resolver o erro 404. Verifiquei rotas, fiz diversas versões Dockerfile e docker-compose.yml, alterações no apache2.conf também.. Muitas tentativas.
+-Infelizmente não consegui fazer o deploy do backend. Fiz o deploy do frontend com facilidade no netlify, quando fui fazer o deploy do backend descobri que o Heroku agora está pago e acabou deixando de ser uma opção viável. A ideia era subir um servidor ec2 no AWS e subir as imagens do Banco de Dados e do php criadas pelo docker-compose.
+Consegui fazer as configurações para as imagens funcionarem depois de bastante tempo tentando.
+Subi o repositório do meu projeto no ec2, subi as imagens e rodei o docker-compose up para iniciar os containers.
+O ip publico para a URL da API do ec2 muda toda hora. ficou inviável.
+Fiquei feliz por conseguir concretizar a ideia, depois de muita dificuldade.Os resultados não foram como esperado.
+
+
+UPDATE 04/26
+-Para resolver o problema com deploy, subi o frontend e o beckend no aws.
+-Fiz imagem do frontend, docker e nginx
+-utilizei as mesmas imagens do beckend e mysql.
+-Atualizei o docker-compose, testei localmente.
+-fiz configurações de segurança para permissão de porta 8000 e 8081 no ec2.
+-push das imagens no docker.hub
+-pull do repositório git, no servidor ec2.
