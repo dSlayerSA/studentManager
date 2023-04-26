@@ -1,11 +1,9 @@
 version: '3.9'
 
 services:
+
   app:
     image: dslayersa/be-student-app:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
     ports:
       - "8000:80"
     environment:
@@ -19,7 +17,7 @@ services:
       - db
 
   db:
-    image: mysql:8.0
+    image: dslayersa/mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: students
@@ -28,5 +26,9 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  nginx:
+    image: dslayersa/fe-student-app:1.2
+    ports:
+      - "8081:80"
 volumes:
   db_data:

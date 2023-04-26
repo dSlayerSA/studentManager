@@ -40,3 +40,13 @@ Consegui fazer as configurações para as imagens funcionarem depois de bastante
 Subi o repositório do meu projeto no ec2, subi as imagens e rodei o docker-compose up para iniciar os containers.
 O ip publico para a URL da API do ec2 muda toda hora. ficou inviável.
 Fiquei feliz por conseguir concretizar a ideia, depois de muita dificuldade.Os resultados não foram como esperado.
+
+
+UPDATE 04/26
+-Para resolver o problema com deploy, subi o frontend e o beckend no aws.
+-Fiz imagem do frontend, docker e nginx
+-utilizei as mesmas imagens do beckend e mysql.
+-Atualizei o docker-compose, testei localmente.
+-fiz configurações de segurança para permissão de porta 8000 e 8081 no ec2.
+-push das imagens no docker.hub
+-pull do repositório git, no servidor ec2.
